@@ -1,0 +1,16 @@
+{% extends 'main/home.html' %}
+
+{% block title %}
+  Ви успішно вийшли з аккаунта
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-5 min-vh-100">
+   <center>
+      <h1>Ви успішно вийшли з аккаунта</h1>
+      <div class="col-4">
+         <a href="{% url 'user' %}" >Увійти в особистий кабінет знову</a>
+      </div>
+   </center>
+</div>
+{% endblock %}

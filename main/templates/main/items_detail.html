@@ -1,0 +1,59 @@
+{% extends 'main/home.html' %}
+
+{% block title %}
+   {{ item.name }}
+{% endblock %}
+
+{% block content %}
+<div class="container my-3">
+   <div class="card mb-3">
+      <div class="row g-0">
+         <div class="col-md-4">
+            <img src="https://pyxis.nymag.com/v1/imgs/c4e/674/1892c1d09ba24378b0d547eeaffa7fac93-EN-US-Worn-S1-Main-Vertical-27x40-RGB-PR.rvertical.w600.jpg" class="img-fluid rounded-start" alt="...">
+         </div>
+         <div class="col-md-8">
+            <div class="card-body">
+               {% if user.is_authenticated %}
+                  {% if user.is_superuser %}
+                     <div class="d-flex justify-content-between">
+                        <h5 class="card-title">{{ item.name}}</h5>
+                        <div class="">
+                           <a href="#" class="btn btn-sm btn-warning">Редагувати товар</a>
+                           <a href="{% url 'item-delete' item.id %}" class="btn btn-sm btn-close"></a>
+                        </div>
+                     </div>
+                  {% else %}
+                     <h5 class="card-title">{{ item.name}}</h5>
+                  {% endif %}
+               {% else %}
+                  <h5 class="card-title">{{ item.name}}</h5>
+               {% endif %}
+
+
+               <p class="card-text">{{ item.description }}</p>
+               <p class="card-text"><small class="text-muted">Розміри:</small></p>
+
+               {% for size in item.sizes.split %}
+                  {% if size == '[' or size == ']' or size == ',' or size == "'" or size == " " %}
+                  {% else %}
+                     <a href="#" class="my-1 btn btn-sm btn-info">{{size}}</a>
+                  {% endif %}
+               {% endfor%}
+               <a href="#" class="btn btn-sm btn-outline-info">Підібрати розмір</a>
+
+
+               {% if item.discount > 0 %}
+                  <div class="d-flex">
+                     <h5 class="text-muted"><del>{{ item.price }}</del><sup class="text-dark"><b>-{{ item.discount }}%</b></sup></h5>
+                     <h3>{{ item.new_price }} грн</h3>
+                  </div>
+               {% else %}
+                  <h3>{{ item.price }} грн</h3>
+               {% endif %}
+               <a href="{% url 'item-detail' item.id %}" class="btn btn-sm btn-outline-info">Замовити</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

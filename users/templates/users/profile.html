@@ -1,0 +1,36 @@
+{% extends 'main/home.html' %}
+
+{% block title %}
+  Кабінет користувача
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-5 min-vh-100">
+   <center>
+      <h1>Кабінет користувача</h1>
+      <div class="col-4">
+         <div class="d-flex text-muted pt-3">
+      <p class="pb-3 mb-0 small lh-sm">
+         <strong class="d-block text-gray-dark">@{{ user.username }}</strong>
+         {% if user.email %}
+            <b>Email:</b> {{ user.email }}
+         {% endif%}
+      </p>
+         </div>
+         <form method='post' enctype="multipart/form-data" class='form-register mt-4'>
+            {% csrf_token %}
+            {{ updateUserForm.as_p }}
+            <button class='btn btn-outline-warning' type='submit'>Обновити</button>
+            <a href="exit" class="btn btn-outline-warning">Вийти</a>
+            <hr>
+         </form>
+      </div>
+   </center>
+</div>
+{% endblock %}
+
+
+
+
+
+

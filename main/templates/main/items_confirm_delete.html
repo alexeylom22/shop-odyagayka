@@ -1,0 +1,20 @@
+{% extends 'main/home.html' %}
+
+{% block title %}
+  Видалення товару
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-5 min-vh-100">
+   <center>
+      <h1>Видалення товару</h1>
+      <div class="col my-2">
+         <form method='post'>
+            {% csrf_token %}
+            <h4>Ви точно хочете видалити <b>{{ item.name }} ?</b></h4>
+            <input type="submit" class="btn btn-sm btn-warning" value="Видалити товар">
+         </form>
+      </div>
+   </center>
+</div>
+{% endblock %}
