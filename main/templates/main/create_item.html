@@ -8,7 +8,7 @@
 <div class="container py-5 my-5 min-vh-100">
   <h1>Додати новий товар</h1>
   <div class="col">
-    <form method='post' class='form-register auth'>
+    <form method='post' enctype="multipart/form-data" class='form-register auth'>
       {% csrf_token %}
       {{ form.as_p }}
       <button class='btn btn-outline-warning' type='submit'>Додати товар</button>

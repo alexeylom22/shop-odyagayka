@@ -3,29 +3,34 @@
 {% block title %}
    {{ item.name }}
 {% endblock %}
-
+{% load static %}
 {% block content %}
 <div class="container py-1 my-1 min-vh-100 d-flex flex-wrap">
-   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
       {% for item in items %}
          <div class="col">
             <div class="card shadow-sm">
-               <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+               {% if item.image %}
+                  <div class="card">
+                     <img class="bd-placeholder-img card-img-top" width="225" height="100%" src="{{ item.image.url }}" alt="{{ item.name }}">
+                  </div>
+               {% else %}
+                  <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/pictures/default.jpg" alt="{{ item.name }}">
+               {% endif %}
 
                <div class="card-body">
                   <h5><a href="{% url 'item-detail' item.id %}" class="link-dark text-decoration-none">{{ item.name|striptags|truncatechars:20 }}</a></h5>
                   <p class="card-text">{{ item.description|striptags|truncatechars:40 }}</p>
                   <div class="d-flex justify-content-between align-items-center">
                      {% if item.discount > 0 %}
-                        <strong class="text-muted"><del>{{ item.price }} грн</del><sup class="text-dark"><b>-{{ item.discount }}%</b></sup></strong>
-                        <h5 class="text-dark ml-o pl-0">{{ item.new_price }} грн</h5>
+                     <strong class="text-muted"><del>{{ item.price }}<small>грн</small></del><sup class="text-dark"><b>-{{ item.discount }}%</b></sup></strong>
+                     <h5 class="text-dark ml-o pl-0">{{ item.new_price }}<small>грн</small></h5>
                      {% else %}
-                        <h5 class="text-dark">{{ item.price }} грн</h5>
+                        <h5 class="text-dark">{{ item.price }}<small>грн</small></h5>
                      {% endif %}
 
                      <div class="btn-group">
-                        <a href="{% url 'item-detail' item.id %}" class="btn btn-sm btn-outline-info">Детальніше</a>
-<!--                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
+                        <a href="{% url 'item-detail' item.id %}" class="btn btn-sm btn-outline-info"> > </a>
                      </div>
                   </div>
                </div>

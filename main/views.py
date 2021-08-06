@@ -17,12 +17,13 @@ class create_item(LoginRequiredMixin, CreateView):
     model = Items
     template_name = 'main/create_item.html'
 
-    fields = ['item', 'name', 'description', 'sizes', 'price', 'discount']
+    fields = ['item', 'image','name', 'description', 'sizes', 'price', 'discount']
 
     def get_context_data(self, **kwards):
         ctx = super(create_item, self).get_context_data(**kwards)
         # ctx['item'].widget.attrs.update({'class': 'form-control'})
         ctx['item'] = 'Тип товару'
+        ctx['image'] = 'Картинка товару'
         ctx['name'] = 'Назва товару'
         ctx['description'] = 'Опис товару'
         ctx['sizes'] = 'Розміри (наприклад "S-3XL")'
@@ -72,3 +73,10 @@ class ItemsDeleteView(DeleteView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(ItemsDeleteView, self).get_context_data(**kwargs)
         return ctx
+
+class ItemsOrderView(CreateView):
+    model = Items
+    context_object_name = 'item'
+    success_url = '/'
+
+    fields = ['item', 'name', 'description', 'sizes', 'price', 'discount']

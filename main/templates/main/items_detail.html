@@ -9,7 +9,12 @@
    <div class="card mb-3">
       <div class="row g-0">
          <div class="col-md-4">
-            <img src="https://pyxis.nymag.com/v1/imgs/c4e/674/1892c1d09ba24378b0d547eeaffa7fac93-EN-US-Worn-S1-Main-Vertical-27x40-RGB-PR.rvertical.w600.jpg" class="img-fluid rounded-start" alt="...">
+            {% if item.image %}
+               <img class="img-fluid rounded-start" src="{{ item.image.url }}" alt="{{ item.name }}">
+            {% else %}
+               <img class="img-fluid rounded-start" src="/pictures/default.jpg" alt="{{ item.name }}">
+            {% endif %}
+<!--            <img src="https://pyxis.nymag.com/v1/imgs/c4e/674/1892c1d09ba24378b0d547eeaffa7fac93-EN-US-Worn-S1-Main-Vertical-27x40-RGB-PR.rvertical.w600.jpg" class="img-fluid rounded-start" alt="...">-->
          </div>
          <div class="col-md-8">
             <div class="card-body">
@@ -50,7 +55,7 @@
                {% else %}
                   <h3>{{ item.price }} грн</h3>
                {% endif %}
-               <a href="{% url 'item-detail' item.id %}" class="btn btn-sm btn-outline-info">Замовити</a>
+               <a href="{% url 'item-order' item.id %}" class="btn btn-sm btn-outline-info">Замовити</a>
             </div>
          </div>
       </div>

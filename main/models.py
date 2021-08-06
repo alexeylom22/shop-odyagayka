@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.urls import reverse
 # from django.contrib.auth.models import User
 # from PIL import Image
+from django.core.exceptions import ValidationError
+from django.core.files.images import get_image_dimensions
 
 ITEM_CHOICES = (
     ('F', 'Футболка'),
@@ -22,6 +24,7 @@ class Items(models.Model):
         default='SC'
         )
     name = models.CharField("Назва товару", max_length=300)
+    image = models.ImageField("Главная картинка товара", upload_to="product_images", default='default.jpg', help_text='Розміри зображення повинні бути 600х750')
     description = models.TextField("Опис товару", max_length=300)
     sizes = models.CharField("Розміри( наприклад 'S-3XL')", max_length=300)
     price = models.DecimalField("Ціна", max_digits=7, decimal_places=2)
@@ -33,6 +36,17 @@ class Items(models.Model):
 
     def get_absolute_url(self):
         return reverse('item-detail', kwargs={'pk': self.pk})
+
+    def clean(self):
+
+        if not self.image:
+            raise ValidationError("Картинка не завантажена!")
+        else:
+            w, h = get_image_dimensions(self.image)
+            if w != 600:
+                raise ValidationError("Ширина завантаженої картинки %i px. Необхідно, щоб було 600px" % w)
+            if h != 750:
+                raise ValidationError("Висота завантаженої картинки %i px. Необхідно, щоб було 750px" % h)
 
     class Meta:
         verbose_name = 'Товари'
